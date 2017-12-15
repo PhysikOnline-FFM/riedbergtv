@@ -1,0 +1,89 @@
+<section id="videos">
+  <div class="row">
+    <div class="twelve columns collapsed">
+      <div id="videos-wrapper" class="bgrid-quaters s-bgrid-thirds cf">
+          {% for item in page.header.videos %}
+            {% set category_index = loop.index %}
+            {% if loop.index is even %}
+              {% for item in item.items|slice(0,3)|reverse %}
+                <div class="columns videos-item">
+                  <div class="item-wrap">
+                    <a href="#modal-{{ category_index }}-{{ (4 - loop.index) }}" title="">
+                      {{ page.media[item.img].cropZoom(300,300) }}
+                      <div class="overlay">
+                        <h1>{{ item.title }}</h1>
+                        <h2>{{ item.description }}</h2>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+              <div class="columns videos-item">
+                <div class="category-wrap">
+                  {{ item.title }}
+                </div>
+              </div>
+            {% elseif loop.index is odd %}
+              <div class="columns videos-item">
+                <div class="category-wrap">  
+                  {{ item.title }}
+                </div>
+              </div>
+              {% for item in item.items|slice(0,3) %}
+                <div class="columns videos-item">
+                  <div class="item-wrap">
+                    <a href="#modal-{{ category_index }}-{{ loop.index }}" title="">
+                      {{ page.media[item.img].cropZoom(300,300) }}
+                      <div class="overlay">
+                        <h1>{{ item.title }}</h1>
+                        <h2>{{ item.description }}</h2>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              {% else %}
+                {{ "Something went wrong" }}
+              {% endfor %}
+            {% endif %} 
+          {% endfor %}
+      </div>
+    </div>
+    {% for item in page.header.videos %}
+      {% set category_index = loop.index %}
+      {% for item in item.items %}
+        <div id="modal-{{ category_index }}-{{ loop.index }}" class="videos-popup-modal mfp-hide">
+          {{ page.media[item.img] }}
+          <div class="description-box">
+            {{ item.title }}
+          </div>
+
+          {#
+          <div class="link-box">
+            <a href="{{ item.title }}">play</a>
+            <a class="popup-modal-dismiss">close</a>
+          </div>
+          #}
+
+          <div class="two columns">
+            <div id="link-wrapper" class="bgrid-halves s-bgrid-halves cf">
+              <div class="columns link-play">
+                <a href="{{ item.title }}">play</a>
+              </div>
+              <div class="columnslink-close">
+                <a class="popup-modal-dismiss">close</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</section>
+
+
+
+
+
+
+
